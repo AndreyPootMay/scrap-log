@@ -120,7 +120,7 @@ if (!file_put_contents($filePath, json_encode($array))) {
     var_dump("Error when BATCH.Log parsing");
 }
 
-// Open the json and change de date format
+// Open the json and change the date format
 try {
     $fhandle = fopen($filePath,"r");
     $content = fread($fhandle,filesize($filePath));
