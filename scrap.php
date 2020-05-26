@@ -86,9 +86,6 @@ if ($file = fopen("BATCH.Log", "r")) {
         $line = fgets($file);
         $line = utf8_decode(trim($line));
         
-        $dateDebut = false;
-        $dateFin = false;
-
         foreach ($keys as $key) {
             if ($auxSeed == 'Date debut') {
                 $array[$titleSeed]['Date debut'] = $line;
@@ -112,19 +109,24 @@ if ($file = fopen("BATCH.Log", "r")) {
 
 $filePath = 'json/' . 'data-parsing-' . time() . '.json';
 
+// Quiting numeric indexes in the array to solve the dynamics only 
+foreach ($array as $key => $value) {
+    if (is_int($key)) {
+        unset($array[$key]);
+    }
+}
+
 if (!file_put_contents($filePath, json_encode($array))) {
     var_dump("Error when BATCH.Log parsing");
 }
 
 // Open the json and change de date format
-
 try {
-    $fname = $filePath;
-    $fhandle = fopen($fname,"r");
-    $content = fread($fhandle,filesize($fname));
+    $fhandle = fopen($filePath,"r");
+    $content = fread($fhandle,filesize($filePath));
     $content = str_replace("\/", "/", $content);
 
-    $fhandle = fopen($fname,"w");
+    $fhandle = fopen($filePath,"w");
     fwrite($fhandle,$content);
     fclose($fhandle);
 } catch (\Throwable $th) {
