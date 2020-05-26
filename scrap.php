@@ -26,6 +26,56 @@ $keys = [
     "Generaci�n de la Cartilla de Lectura",
     "Generaci�n de archivo interfaz SBL",
     "Generaci�n de archivo interfaz VIENA",
+    "Carga de Lectura interfaz MOTOROLA",
+    "Carga de Lectura Interfaz SBL",
+    "Carga de Lectura Interfaz Viena",
+    "Impresi�n Anomal�as de Lectura",
+    "Estimaci�n Lecturas",
+    "Descargo Lecturas",
+    "C�lculo de Consumo",
+    "Reorganization tablas temporales",
+    "Invalidaci�n del Lote de Facturaci�n",
+    "C�lculo Facturas",
+    "Impresi�n Listado de Facturas",
+    "Validaci�n Lote de Facturaci�n",
+    "Generaci�n Spool de Facturas",
+    "Depuraci�n de Datos Temporales",
+    "Refrescado Info para CAC",
+    "Impresi�n Resumen del Lote de Facturaci�n",
+    "Actualizaci�n de clientes con deuda vencida para el c�lculo de saldos",
+    "2da. Actualizaci�n de Saldos",
+    "Actualizaci�n del estado del cliente en la gesti�n de la deuda",
+    "Generaci�n de Notificaciones de Corte",
+    "Generaci�n Ordenes de Corte",
+    "Generaci�n de asuntos sobre el codigo de observaci�n de lectura",
+    "Actualizaci�n de Asuntos en Curso",
+    "Impresi�n de Cartas de Cambio de medidor",
+    "Impresi�n de Cartas de Instalaci�n de Medidor",
+    "Impresi�n de Cartas de Nuevo Servicio",
+    "Impresi�n de Cartas de Reclamo 1 y 2",
+    "Impresi�n de Cartas de Reclamo 1 y 2  SOLIDARIDAD",
+    "Impresi�n de Cartas de Aviso de destronque",
+    "Impresi�n de Corte de Drenaje",
+    "Impresi�n Ordenes de Trabajo",
+    "Impresi�n Lista de Corte",
+    "Actualizaci�n de Asuntos en Curso",
+    "SMS0",
+    "SMS1",
+    "SMS2",
+    "IVR0",
+    "IVR1",
+    "IVR2",
+    "IVR3",
+    "IVR4",
+    "Terminacion de contactos y asuntos",
+    "Reconexi�n autom�tica",
+    "Generaci�n Bip",
+    "Extracci�n Contable",
+    "Analisis de recuperacion",
+    "Actualizaci�n de Datos Contacto",
+    "Cuentas Incobrables",
+    "Cifras de Control",
+    "Fin Tratamientos Diarios X7",
 ];
 
 $auxSeed = '';
@@ -60,4 +110,10 @@ if ($file = fopen("BATCH.Log", "r")) {
     fclose($file);
 }
 
-var_dump($array);
+$filePath = 'json/' . 'data-parsing-' . date('Y-m-d') . '.json';
+
+if (!file_put_contents($filePath, json_encode($array))) {
+    var_dump("Error when BATCH.Log parsing");
+}
+
+print_r("File successfully created: {$filePath}\n");
