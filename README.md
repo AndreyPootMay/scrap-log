@@ -8,7 +8,7 @@ The first version only works with `php`.
 
 You can execute using the next command `php scrap.php`.
 
-### Advirsements
+### Advisements
 
 - The scrap file has hardcoded in the directory `BATCH.Log` you can change it in code.
 - The parse files would be generated in the next directory: `json/*`.
