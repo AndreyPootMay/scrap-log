@@ -110,10 +110,25 @@ if ($file = fopen("BATCH.Log", "r")) {
     fclose($file);
 }
 
-$filePath = 'json/' . 'data-parsing-' . date('Y-m-d') . '.json';
+$filePath = 'json/' . 'data-parsing-' . time() . '.json';
 
 if (!file_put_contents($filePath, json_encode($array))) {
     var_dump("Error when BATCH.Log parsing");
+}
+
+// Open the json and change de date format
+
+try {
+    $fname = $filePath;
+    $fhandle = fopen($fname,"r");
+    $content = fread($fhandle,filesize($fname));
+    $content = str_replace("\/", "/", $content);
+
+    $fhandle = fopen($fname,"w");
+    fwrite($fhandle,$content);
+    fclose($fhandle);
+} catch (\Throwable $th) {
+    throw $th;
 }
 
 print_r("File successfully created: {$filePath}\n");
