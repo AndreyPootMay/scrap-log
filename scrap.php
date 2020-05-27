@@ -88,16 +88,16 @@ if ($file = fopen("BATCH.Log", "r")) {
         
         foreach ($keys as $key) {
             if ($auxSeed == 'Date debut') {
-                $array[$titleSeed]['Date debut'] = $line;
+                $array[$titleSeed]['Date_debut'] = $line;
             }
 
             if ($auxSeed == 'Date fin') {
-                $array[$titleSeed]['Date fin'] = $line;
+                $array[$titleSeed]['Date_fin'] = $line;
             }
 
             if ($line == utf8_decode(trim($key))) { // Título del json
                 $array[] = $line; 
-                $titleSeed = $line;
+                $titleSeed = str_replace(" ", "_", $line);
             }
 
             $auxSeed = $line;
