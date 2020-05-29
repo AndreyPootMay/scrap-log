@@ -87,12 +87,19 @@ if ($file = fopen("BATCH.Log", "r")) {
         $line = utf8_decode(trim($line));
         
         foreach ($keys as $key) {
-            if ($auxSeed == 'Date debut') {
-                $array[$titleSeed]['Date_debut'] = $line;
-            }
+            if ($auxSeed == 'Date debut' || $auxSeed == 'Date fin') {
 
-            if ($auxSeed == 'Date fin') {
-                $array[$titleSeed]['Date_fin'] = $line;
+                $datetime = explode(' ', $line);
+
+                if ($auxSeed == 'Date debut') {
+                    $array[$titleSeed]['Date_debut']['Fecha'] = $datetime[0];
+                    $array[$titleSeed]['Date_debut']['Hora'] = $datetime[1];
+                }
+    
+                if ($auxSeed == 'Date fin') {
+                    $array[$titleSeed]['Date_fin']['Fecha'] = $datetime[0];
+                    $array[$titleSeed]['Date_fin']['Hora'] = $datetime[1];
+                }
             }
 
             if ($line == utf8_decode(trim($key))) { // Título del json
