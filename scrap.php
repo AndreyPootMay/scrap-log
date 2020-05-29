@@ -81,40 +81,47 @@ $keys = [
 $auxSeed = '';
 
 $titleSeed = '';
-if ($file = fopen("BATCH.Log", "r")) {
-    while(!feof($file)) {
-        $line = fgets($file);
-        $line = utf8_decode(trim($line));
+try {
+    //opening the file if exists
+    if ($file = fopen("BATCH.Log", "r")) {
+        while(!feof($file)) {
+            $line = fgets($file);
+            $line = utf8_decode(trim($line));
+            
+            foreach ($keys as $key) {
+                if ($auxSeed == 'Date debut' || $auxSeed == 'Date fin') {
+    
+                    $datetime = explode(' ', $line);
+    
+                    if ($auxSeed == 'Date debut') {
+                        $array[$titleSeed]['Date_debut']['Fecha'] = $datetime[0];
+                        $array[$titleSeed]['Date_debut']['Hora'] = $datetime[1];
+                    }
         
-        foreach ($keys as $key) {
-            if ($auxSeed == 'Date debut' || $auxSeed == 'Date fin') {
-
-                $datetime = explode(' ', $line);
-
-                if ($auxSeed == 'Date debut') {
-                    $array[$titleSeed]['Date_debut']['Fecha'] = $datetime[0];
-                    $array[$titleSeed]['Date_debut']['Hora'] = $datetime[1];
+                    if ($auxSeed == 'Date fin') {
+                        $array[$titleSeed]['Date_fin']['Fecha'] = $datetime[0];
+                        $array[$titleSeed]['Date_fin']['Hora'] = $datetime[1];
+                    }
                 }
     
-                if ($auxSeed == 'Date fin') {
-                    $array[$titleSeed]['Date_fin']['Fecha'] = $datetime[0];
-                    $array[$titleSeed]['Date_fin']['Hora'] = $datetime[1];
+                if ($line == utf8_decode(trim($key))) { // Título del json
+                    $array[] = $line; 
+                    $titleSeed = str_replace(" ", "_", $line);
                 }
-            }
-
-            if ($line == utf8_decode(trim($key))) { // Título del json
-                $array[] = $line; 
-                $titleSeed = str_replace(" ", "_", $line);
-            }
-
-            $auxSeed = $line;
-        } 
+    
+                $auxSeed = $line;
+            } 
+        }
+    
+        fclose($file);
+    } else {
+        return false;
     }
-
-    fclose($file);
+} catch (\Throwable $th) {
+    return false;
 }
 
-$filePath = 'json/' . 'data-parsing-' . time() . '.json';
+$filePath = 'BATCH.json';
 
 // Quiting numeric indexes in the array to solve the dynamics only 
 foreach ($array as $key => $value) {
