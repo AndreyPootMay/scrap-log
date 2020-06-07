@@ -121,7 +121,7 @@ try {
     return false;
 }
 
-$filePath = 'BATCH.json';
+$filePath = '/usr/share/hassio/homeassistant/BATCH.json';
 
 // Quiting numeric indexes in the array to solve the dynamics only 
 foreach ($array as $key => $value) {
